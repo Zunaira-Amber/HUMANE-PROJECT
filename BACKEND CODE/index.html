@@ -1,0 +1,42 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hackathon Demo</title>
+</head>
+<body>
+
+    <h1>Hackathon Demo</h1>
+
+    <p>Enter input:</p>
+    <input type="text" id="userInput" />
+
+    <br><br>
+
+    <button onclick="sendData()">Submit</button>
+
+    <p><strong>Output:</strong></p>
+    <p id="output">Waiting...</p>
+
+    <script>
+        async function sendData() {
+            const userInput = document.getElementById("userInput").value;
+
+            const response = await fetch("http://127.0.0.1:8000/process", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    user_input: userInput
+                })
+            });
+
+            const data = await response.json();
+            document.getElementById("output").innerText = data.output;
+        }
+    </script>
+
+</body>
+</html>
+
